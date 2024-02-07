@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+    crossorigin="anonymous"
+  />
+</head>
+<body>
+    <div id="display" class="m-5 shadow-sm col-11 mx-auto border rounded-3 p-4">
+        <h1 class="text-center fw-bold text-warning m-0">Google Pixels</h1>
+        <hr/>
+        <input type="text" id="search" class="form-control mb-3" placeholder="Search">
+        <button  onclick="fetchData()" class="btn btn-secondary form-control" >Fetch</button>
+        <!-- <img class="image" id="image" src="" alt="Card image"> -->
+    </div>
+    <div id="images" class="row m-5"></div>
+
+
+
+
+
+    <script>
+     
+ async function fetchData(){
+    try{
+        const search = document.getElementById('search').value;
+        const response = await fetch(`https://api.pexels.com/v1/search?query=${search}`, 
+        {headers:{ authorization:'JixekbHabTVbDCH79HbnxsgX2dnvZx7YaNbNRoCCI7FrM85eCvmVUe85' }})
+            const reply = await response.json()
+            console.log(reply)
+            displayReply(reply.photos)
+    } catch(err){
+        document.getElementById('display').innerHTML = `There was an Error`
+        console.log(err)
+    }
+}
+
+// function displayReply(array)
+// const displayReply = (array)=> {
+//     let display = array.map(item =>`<div class='col-4 p-3 border rounded'> <img width='100%' src=' ${item.src.original}'/>
+        
+//         <h3 class= 'text-center text-info'> ${item.alt,photographer} </h3>
+//         </div>`)
+// images.innerHTML=display
+
+// }
+
+const displayReply = (array) =>{
+    let display = array.map(item =>`<div class="card row col-6 g-2" style="width: 18rem;">
+        <img class = "card-img-top" src = "${item.src.original}">
+        <div class = "card-body"
+        <h5 class = "card-title"> ${item.alt} </h5>
+        <p class = "card-text"> ${item.photographer} </p>
+        </div>
+        </div>`).join(" ")
+        images.innerHTML = display;
+}
+    </script>
+</body>
+</html>
